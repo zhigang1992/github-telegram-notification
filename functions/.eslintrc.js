@@ -5,11 +5,12 @@ module.exports = {
     node: true,
   },
   extends: [
+    "prettier",
     "eslint:recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "google",
+    // "google",
     "plugin:@typescript-eslint/recommended",
   ],
   parser: "@typescript-eslint/parser",
