@@ -12,7 +12,7 @@ bot.command("token", async (ctx) => {
   const payload = ctx.message.text.slice("/token ".length);
   if (!payload) {
     ctx.reply(
-      "Use /token <token> to set a new token, you can get it from https://github.com/settings/tokens"
+      "Use /token <token> to set a new token, you can get it from https://github.com/settings/tokens only notification permission is needed"
     );
     return;
   }
