@@ -21,6 +21,12 @@ bot.command("token", async (ctx) => {
 });
 
 function processUrl(input: string) {
+  const issues = input.match(
+    /https:\/\/api.github.com\/repos\/(.+)\/(.+)\/issues\/(\d+)/
+  );
+  if (issues != null) {
+    return `https://github.com/${issues[1]}/${issues[2]}/issues/${issues[3]}`;
+  }
   const pr = input.match(
     /https:\/\/api.github.com\/repos\/(.+)\/(.+)\/pulls\/(\d+)/
   );
@@ -50,16 +56,9 @@ async function checkUser(chatId: string, token: string) {
     }
     await bot.telegram.sendMessage(
       chatId,
-      `${notification.subject.type}\n${
+      `${notification.repository.full_name} - ${notification.subject.type}\n${
         notification.subject.title
       }\n\n${processUrl(notification.subject.url)}`
-      // {
-      //   reply_markup: {
-      //     inline_keyboard: [
-      //       [{ text: "View", url: processUrl(notification.subject.url) }],
-      //     ],
-      //   },
-      // }
     );
     await sentRef.set(true);
   }
