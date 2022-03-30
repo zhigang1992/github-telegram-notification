@@ -51,7 +51,7 @@ async function checkUser(chatId: string, token: string) {
   }).then((r) => r.json());
   for (const notification of notifications) {
     const sentRef = admin.database().ref(`/sent/${chatId}/${notification.id}`);
-    if ((await sentRef.get()).exists()) {
+    if ((await sentRef.get()).val() !== notification.updated_at) {
       continue;
     }
     await bot.telegram.sendMessage(
@@ -60,7 +60,7 @@ async function checkUser(chatId: string, token: string) {
         notification.subject.title
       }\n\n${processUrl(notification.subject.url)}`
     );
-    await sentRef.set(true);
+    await sentRef.set(notification.updated_at);
   }
 }
 
