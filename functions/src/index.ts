@@ -51,7 +51,7 @@ async function checkUser(chatId: string, token: string) {
   }).then((r) => r.json());
   for (const notification of notifications) {
     const sentRef = admin.database().ref(`/sent/${chatId}/${notification.id}`);
-    if ((await sentRef.get()).val() !== notification.updated_at) {
+    if ((await sentRef.get()).val() === notification.updated_at) {
       continue;
     }
     await bot.telegram.sendMessage(
